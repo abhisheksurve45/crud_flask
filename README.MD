@@ -24,3 +24,11 @@ Password: axrHwbkA5n
 Step 5:
 
 Click on user_db to view DB details.
+
+
+Modules required:
+
+pip install flask_table
+pip install flask_mysql
+pip install flask_cors
+pip install uuid
