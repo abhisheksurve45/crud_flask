@@ -72,16 +72,17 @@ def update_user():
 		_json = request.form
 		_id = _json['id']
 		_name = _json['inputName']
+		_contact = _json['contact']
+		_address = _json['address']
 		_email = _json['inputEmail']
-		_password = _json['inputPassword']		
-		if _name and _email and _password and _id and request.method == 'POST':
-			sql = "UPDATE user_db SET user_name=%s, user_email=%s, user_password=%s WHERE user_id=%s"
-			data = (_name, _email, _password, _id)
+		if _name and _email and request.method == 'POST':
+			sql = "UPDATE user_db SET user_name=%s, contact=%s, address=%s WHERE user_id=%s and user_email=%s"
+			data = (_name, _contact, _address, _id, _email)
 			conn = mysql.connect()
 			cursor = conn.cursor()
 			cursor.execute(sql, data)
 			conn.commit()
-			resp = jsonify('User updated successfully!')
+			resp = jsonify('User '+ _id +' updated successfully!')
 			resp.status_code = 200
 			return resp
 		else:
@@ -99,7 +100,7 @@ def delete_user(id):
 		cursor = conn.cursor()
 		cursor.execute("DELETE FROM user_db WHERE user_id=%s", (id))
 		conn.commit()
-		resp = jsonify('User deleted successfully!')
+		resp = jsonify('User '+str(id)+ ' deleted successfully!')
 		resp.status_code = 200
 		return resp
 	except Exception as e:
