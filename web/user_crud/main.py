@@ -3,23 +3,27 @@ from app import app
 from db_config import mysql
 from flask import jsonify
 from flask import flash, request
+import random 
 
 @app.route('/add', methods=['POST'])
 def add_user():
 	try:
 		_json = request.form
-		_id = _json['id']
+		_id = str(random.randint(0, 1000))
 		_name = _json['inputName']
 		_email = _json['inputEmail']
-		_password = _json['inputPassword']
-		if _name and _email and _password and request.method == 'POST':
-			sql = "INSERT INTO user_db(user_id, user_name, user_email, user_password) VALUES(%s, %s, %s, %s)"
-			data = (_id, _name, _email, _password)
+		_contact = _json['contact']
+		_address = _json['address']
+		_profession = _json['profession']
+		_age = _json['age']
+		if request.method == 'POST':
+			sql = "INSERT INTO user_db VALUES(%s, %s, %s, %s, %s, %s, %s)"
+			data = (_id, _name, _email,_contact,_address,_profession,_age)
 			conn = mysql.connect()
 			cursor = conn.cursor()
 			cursor.execute(sql, data)
 			conn.commit()
-			resp = jsonify('User added successfully!')
+			resp = jsonify('User '+ _name +' added successfully! Your user id is : '+_id )
 			resp.status_code = 200
 			return resp
 		else:
@@ -35,7 +39,7 @@ def users():
 	try:
 		conn = mysql.connect()
 		cursor = conn.cursor(pymysql.cursors.DictCursor)
-		cursor.execute("SELECT user_id id, user_name name, user_email email, user_password pwd FROM user_db")
+		cursor.execute("SELECT * FROM user_db")
 		rows = cursor.fetchall()
 		resp = jsonify(rows)
 		resp.status_code = 200
@@ -51,7 +55,7 @@ def user(id):
 	try:
 		conn = mysql.connect()
 		cursor = conn.cursor(pymysql.cursors.DictCursor)
-		cursor.execute("SELECT user_id id, user_name name, user_email email, user_password pwd FROM user_db WHERE user_id=%s", id)
+		cursor.execute("SELECT * FROM user_db WHERE user_id=%s", id)
 		row = cursor.fetchone()
 		resp = jsonify(row)
 		resp.status_code = 200
