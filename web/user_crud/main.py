@@ -4,12 +4,14 @@ from db_config import mysql
 from flask import jsonify
 from flask import flash, request
 import random 
+import uuid
 
 @app.route('/add', methods=['POST'])
 def add_user():
 	try:
 		_json = request.form
-		_id = str(random.randint(0, 1000))
+		_id = str(uuid.uuid1().hex)
+		print(_id)
 		_name = _json['inputName']
 		_email = _json['inputEmail']
 		_contact = _json['contact']
