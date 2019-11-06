@@ -28,7 +28,10 @@ Click on user_db to view DB details.
 
 Modules required:
 
-pip install flask_table
-pip install flask_mysql
-pip install flask_cors
-pip install uuid
+1. pip install flask_table
+
+2. pip install flask_mysql
+
+3. pip install flask_cors
+
+4. pip install uuid
