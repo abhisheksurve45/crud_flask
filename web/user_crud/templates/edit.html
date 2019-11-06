@@ -1,8 +1,26 @@
 <doctype html>
-    <title>Edit User</title>
+
+            <head>
+                    <title>Edit User</title>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+                  </head>
+    
+                  <script>
+                        $(document).ready(function(){
+                          $('[data-toggle="tooltip"]').tooltip();   
+                        });
+                        </script>
     <form method="POST" action="http://127.0.0.1:5000/update">
         <dl>
             <h1>Enter your correct Id and Email to edit details...</h1>
+            <div class="">
+                    <a href="#" data-toggle="tooltip" title="Edit only interested fields!">Help</a>
+                  </div>
+                  <br>
             <p>
                 <input name="id" value="" type="text" placeholder="Id" autocomplete="off" required>
             </p>
@@ -12,16 +30,20 @@
             </p>
 
             <p>
-                <input name="inputName" value="" type="text" placeholder="Name" autocomplete="off" required>
+                <input name="inputName" value="" type="text" placeholder="Name" autocomplete="off" >
             </p>
 
             <p>
-                <input name="contact" value="" type="number" placeholder="contact" autocomplete="off" required>
+                <input name="contact" value="" type="number" placeholder="contact" autocomplete="off">
             </p>
             
             <p>
-                <input name="address" value="" type="text" placeholder="address" autocomplete="off" required>
+                <input name="address" value="" type="text" placeholder="address" autocomplete="off">
             </p>
+
+            <p>
+                    <input name="profession" value="" type="text" placeholder="profession" autocomplete="off">
+                </p>
         </dl>
         <p>
             <input name="id" value="" type="hidden">

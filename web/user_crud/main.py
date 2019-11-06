@@ -11,7 +11,6 @@ def add_user():
 	try:
 		_json = request.form
 		_id = str(uuid.uuid1().hex)
-		print(_id)
 		_name = _json['inputName']
 		_email = _json['inputEmail']
 		_contact = _json['contact']
@@ -73,13 +72,14 @@ def update_user():
 	try:
 		_json = request.form
 		_id = _json['id']
-		_name = _json['inputName']
-		_contact = _json['contact']
-		_address = _json['address']
 		_email = _json['inputEmail']
+		_name = _json['inputName'] or None
+		_contact = _json['contact'] or None
+		_address = _json['address'] or None
+		_profession = _json['profession'] or None
 		if _name and _email and request.method == 'POST':
-			sql = "UPDATE user_db SET user_name=%s, contact=%s, address=%s WHERE user_id=%s and user_email=%s"
-			data = (_name, _contact, _address, _id, _email)
+			sql = "UPDATE user_db SET user_name=COALESCE(%s, user_name), contact=COALESCE(%s, contact), address=COALESCE(%s, address), profession=COALESCE(%s, profession) WHERE user_id=%s and user_email=%s"
+			data = (_name, _contact, _address, _profession,_id, _email)
 			conn = mysql.connect()
 			cursor = conn.cursor()
 			cursor.execute(sql, data)
