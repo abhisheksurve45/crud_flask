@@ -73,16 +73,17 @@ def update_user():
 		_json = request.form
 		_id = _json['id']
 		_email = _json['inputEmail']
-		_name = _json['inputName'] or None
-		_contact = _json['contact'] or None
-		_address = _json['address'] or None
-		_profession = _json['profession'] or None
+		_name = "'"+_json['inputName']+"'" if _json['inputName'] else 'NULL'
+		_contact = "'"+_json['contact']+"'" if _json['contact'] else 'NULL'
+		_address = "'"+_json['contact']+"'" if _json['contact'] else 'NULL'
+		_profession = "'"+_json['profession']+"'" if _json['profession'] else 'NULL'
 		if _name and _email and request.method == 'POST':
-			sql = "UPDATE user_db SET user_name=COALESCE(%s, user_name), contact=COALESCE(%s, contact), address=COALESCE(%s, address), profession=COALESCE(%s, profession) WHERE user_id=%s and user_email=%s"
-			data = (_name, _contact, _address, _profession,_id, _email)
+			sql = 'UPDATE user_db SET user_name=COALESCE('+ _name +', user_name), contact=COALESCE('+ _contact +', contact), address=COALESCE('+ _address +', address), profession=COALESCE('+ _profession +', profession) WHERE user_id=%s and user_email=%s'
+			print(sql)
+			data = (_id, _email)
 			conn = mysql.connect()
 			cursor = conn.cursor()
-			cursor.execute(sql, data)
+			cursor.execute(sql,data)
 			conn.commit()
 			resp = jsonify('User '+ _id +' updated successfully!')
 			resp.status_code = 200
@@ -95,7 +96,7 @@ def update_user():
 		cursor.close() 
 		conn.close()
 		
-@app.route('/delete/<int:id>', methods=['DELETE'])
+@app.route('/delete/<str:id>', methods=['DELETE'])
 def delete_user(id):
 	try:
 		conn = mysql.connect()
