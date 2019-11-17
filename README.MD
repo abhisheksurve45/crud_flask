@@ -35,3 +35,6 @@ Modules required:
 3. pip install flask_cors
 
 4. pip install uuid
+
+
+Thank you
